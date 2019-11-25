@@ -1,10 +1,37 @@
+#!/usr/bin/python3
+
 import socket
 import select
+import sys, getopt
+
+IP = ""
+PORT = 0
+def main(argv):
+   global IP
+   global PORT
+   try:
+      opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+   except getopt.GetoptError:
+      print ('test.py -i <inputfile> -o <outputfile>')
+      sys.exit(2)
+   for opt, arg in opts:
+      if opt == '-h':
+         print ('test.py -i <inputfile> -o <outputfile>')
+         sys.exit()
+      elif opt in ("-i", "--ifile"):
+         IP = arg
+      elif opt in ("-o", "--ofile"):
+         PORT = int(arg)
+   print ('输入的IP为：', IP)
+   print ('输出的PORT为：', PORT)
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
 
 HEADER_LENGTH = 10
 
-IP = "127.0.0.1"
-PORT = 1234
+#IP = "127.0.0.1"
+#PORT = 1234
 
 # Create a socket
 # socket.AF_INET - address family, IPv4, some otehr possible are AF_INET6, AF_BLUETOOTH, AF_UNIX
